@@ -1,0 +1,9 @@
+<% @questions.each do |question| %>
+    <div>
+        <%= link_to question_path(question.id) do %>
+            <p>title : <%= question.title %></p>
+            <%= image_tag question.get_image %>
+        <% end %>
+        <p>by <%= question.end_user.name %></p>
+    </div>
+<% end %>

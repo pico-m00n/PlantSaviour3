@@ -1,0 +1,10 @@
+ <div>
+     <p>title : <%=@question.title %></p>
+     <p>body : <%= @question.body %></p>
+     <%= image_tag @question.get_image %>
+     <p>by <%= @question.end_user.name %><%= image_tag @question.end_user.get_profile_image(100, 100) %></p>
+     <p>投稿日：<%= @question.created_at.strftime('%Y/%m/%d') %></p>
+     <% if @question.end_user == current_end_user %>
+         <%= link_to "削除", question_path(@question), method: :delete %>
+     <% end %> 
+ </div>

@@ -1,0 +1,14 @@
+<div>
+    <h3><%= @end_user.name %></h3>
+    <%= image_tag @end_user.get_profile_image(100,100) %>
+    <p><%= link_to "プロフィール編集", edit_end_user_path(@end_user) %></p>
+</div>
+
+<% @questions.each do |question| %>
+<div>
+    <%= link_to question_path(question.id) do %>
+        <p>title : <%= question.title %></p>
+        <p>body : <%= question.body %></p>
+    <% end %>
+</div>
+<% end %>
