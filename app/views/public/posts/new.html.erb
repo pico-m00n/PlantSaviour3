@@ -1,15 +1,15 @@
-<h1>質問投稿</h1>
+<h1>記事投稿</h1>
 
-<% if @question.errors.any? %>
-    <%= @question.errors.count %>件のエラーが発生しました
+<% if @post.errors.any? %>
+    <%= @post.errors.count %>件のエラーが発生しました
     <ul>
-      <% @question.errors.full_messages.each do |message| %>
+      <% @post.errors.full_messages.each do |message| %>
        <li><%= message %></li>
       <% end %>
     </ul>
 <% end %>
 
-<%= form_with model: @question do |f| %>
+<%= form_with model: @post do |f| %>
   <h4>題名</h4>
     <%= f.text_field :title %>
   <h4>詳細</h4>
@@ -19,7 +19,7 @@
   <div class="field">
     <% @tags.each do |t| %>
       <%= f.label t.name %>
-      <%= check_box_tag "question[tag_ids][]", t.id, @question.tags.include?(t) %>
+      <%= check_box_tag "post[tag_ids][]", t.id, @post.tags.include?(t) %>
       <br/>
     <% end %>
   </div>

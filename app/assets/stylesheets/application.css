@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.vertical{
+  writing-mode: vertical-rl;
+}

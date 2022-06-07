@@ -6,29 +6,38 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <% if end_user_signed_in? %>
-      <li>
-        <%= link_to "質問投稿", new_question_path %>
-      </li>
-      <li>
-        <%= link_to "mypage", end_user_path(current_end_user.id) %>
-      </li>
-      <li>
-        <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_end_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_end_user_session_path %>
-      </li>
-    <% end %>
-    <%= yield %>
+<body>
+    <%= render 'layouts/header' %>
+
+    <main class="row bg-secondary">
+      <% if end_user_signed_in? %>
+        <div class="col-1 bg-light">
+         <%= render 'layouts/sidebar' %>
+        </div>
+        <div class="col-10">
+          <%= yield %>
+        </div>
+        <div class="col-1 bg-light">
+          <%= render 'layouts/totop' %>
+        </div>
+      <% else %>
+        <div class="col-11">
+          <%= yield %>
+        </div>
+        <div class="col-1 bg-light">
+          <%= render 'layouts/totop' %>
+        </div>
+     <% end %>
+
+    </main>
+
+   <%= render 'layouts/footer' %>
   </body>
 </html>
+
+ 

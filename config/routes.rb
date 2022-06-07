@@ -12,10 +12,17 @@ Rails.application.routes.draw do
   
   root to: "public/homes#top"
   get 'about' => "public/homes#about"
+  get 'search' => "public/seaches#search"
   
   scope module: 'public' do
     resources :end_users
-    resources :questions
+    resources :posts do
+      resources :post_comments, only: [:create, :destroy]
+    end
+    resources :questions do
+     resource :bookmarks, only: [:create, :destroy]
+     resources :answers, only: [:create, :destroy]
+    end
   end
   
   namespace :admin do

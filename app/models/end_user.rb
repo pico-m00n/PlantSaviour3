@@ -9,6 +9,8 @@ class EndUser < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :reactions, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
+  
 
   def self.guest
     find_or_create_by!(name: 'guestuser' ,email: 'guest@example.com') do |end_user|

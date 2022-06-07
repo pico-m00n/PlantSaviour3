@@ -1,0 +1,19 @@
+<%  @question.bookmarked_by?(current_end_user).each do |question| %>
+    <%= link_to question_path(question.id) do %>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card">
+                <img class="card-img-top"><%= image_tag question.get_image %></img>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= question.title %></h5>
+                    <p class="card-text">by <%= question.end_user.name %></p>
+                    <p class="card-text"><%= link_to "#{question.answers.count}件の回答", question_path(question.id) %></p>
+                    <% question.tags.each do |tag| %>
+                      <button class="btn btn-info btn-sm mb-1"><%= tag.name %></button>
+                    <% end %>
+                  </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% end %>

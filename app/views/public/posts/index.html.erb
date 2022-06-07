@@ -1,7 +1,7 @@
- <header class="jumbotron my-4 bg-mori">
-    <h1 class="display-3 text-light">Questions</h1>
+<header class="jumbotron my-4 bg-mori">
+    <h1 class="display-3 text-light">Posts</h1>
      <div>
-         <%= form_tag questions_path, method: :get, class: 'boards__searchForm mb-2' do %>
+         <%= form_tag posts_path, method: :get, class: 'boards__searchForm mb-2' do %>
             <%= select_tag :tag_id,
              options_from_collection_for_select(Tag.all, :id, :name, params[:tag_id]),
              {prompt: 'タグで絞り込み検索',onchange: 'submit(this.form);'}
@@ -19,17 +19,16 @@
 
   </header>
 
-<% @questions.each do |question| %>
-    <%= link_to question_path(question.id) do %>
+<% @posts.each do |post| %>
+    <%= link_to post_path(post.id) do %>
         <div class="row row-cols-1 row-cols-md-3 g-4">
           <div class="col">
             <div class="card">
-                <img class="card-img-top"><%= image_tag question.get_image %></img>
+                <img class="card-img-top"><%= image_tag post.get_image %></img>
                   <div class="card-body">
-                    <h5 class="card-title"><%= question.title %></h5>
-                    <p class="card-text">by <%= question.end_user.name %></p>
-                    <p class="card-text"><%= link_to "#{question.answers.count}件の回答", question_path(question.id) %></p>
-                    <% question.tags.each do |tag| %>
+                    <h5 class="card-title"><%= post.title %></h5>
+                    <p class="card-text">by <%= post.end_user.name %></p>
+                    <% post.tags.each do |tag| %>
                       <button class="btn btn-info btn-sm mb-1"><%= tag.name %></button>
                     <% end %>
                   </div>
@@ -38,4 +37,3 @@
         </div>
     <% end %>
 <% end %>
-

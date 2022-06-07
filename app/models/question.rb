@@ -5,6 +5,9 @@ class Question < ApplicationRecord
   has_many :tags, through: :question_tags
   has_many :bookmarks, dependent: :destroy
   
+  validates :title, presence: true
+  validates :body, presence: true
+  
   has_one_attached :image
   def get_image
     unless image.attached?
@@ -15,7 +18,7 @@ class Question < ApplicationRecord
   end
 
   def bookmarked_by?(end_user)
-    bookmarks.where(end_user_id: end_user).exists?
+    bookmarks.exists?(end_user_id: end_user.id)
   end
 
   def self.looks(search, word)

@@ -2,7 +2,7 @@ class Public::EndUsersController < ApplicationController
   
   def show
     @end_user = EndUser.find(params[:id])
-    @questions = @end_user.questions
+    @questions = @end_user.questions.page(params[:page])
   end
 
   def edit

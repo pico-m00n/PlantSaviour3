@@ -1,10 +1,43 @@
  <div>
-     <p>title : <%=@question.title %></p>
-     <p>body : <%= @question.body %></p>
-     <%= image_tag @question.get_image %>
-     <p>by <%= @question.end_user.name %><%= image_tag @question.end_user.get_profile_image(100, 100) %></p>
-     <p>投稿日：<%= @question.created_at.strftime('%Y/%m/%d') %></p>
-     <% if @question.end_user == current_end_user %>
-         <%= link_to "削除", question_path(@question), method: :delete %>
-     <% end %> 
+  <p>title : <%=@question.title %></p>
+  <p>body : <%= @question.body %></p>
+  <%= image_tag @question.get_image %>
+  <p>by <%= @question.end_user.name %><%= image_tag @question.end_user.get_profile_image(100, 100) %></p>
+  <p>投稿日：<%= @question.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @question.end_user == current_end_user %>
+      <%= link_to "削除", question_path(@question), method: :delete %>
+  <% end %> 
+  
+  <% if @question.bookmarked_by?(current_end_user) %>
+      <p>
+       <%= link_to question_bookmarks_path(@question), method: :delete do %>
+        🔹<%= @question.bookmarks.count %>ブックマーク
+       <% end %>
+      </p>
+  <% else %>
+      <p>
+       <%= link_to question_bookmarks_path(@question), method: :post do %>
+        ◇<%= @question.bookmarks.count %>ブックマーク
+       <% end %>
+      </p>
+  <% end %>
+ </div>
+ 
+ <div>
+  <P>回答件数 : <%= @question.answers.count %></P>
+  <% @question.answers.each do |answer| %>
+   <p><%= image_tag answer.end_user.get_profile_image(100,100) %></p>
+   <%= link_to answer.end_user.name, end_user_path(answer.end_user.id) %>
+   <%= answer.created_at.strftime('%Y/%m/%d') %><%= answer.body %>
+   <% if answer.end_user == current_end_user %>
+    <%= link_to "削除", question_answer_path(answer.question, answer), method: :delete %>
+   <% end %>
+  <% end %>
+ </div>
+ 
+ <div>
+  <%= form_with model: [@question, @answer] do |f| %>
+   <%= f.text_area :body, rows: '5' %>
+   <%= f.submit "回答する" %>
+  <% end %>
  </div>

@@ -1,22 +1,27 @@
 class Public::QuestionsController < ApplicationController
     
     def new
+        @tags = Tag.all
         @question = Question.new
     end
     
     def create
         @question = Question.new(question_params)
-        @question.end_user_id=current_end_user.id
-        @question.save
-        redirect_to questions_path
+        @question.end_user_id = current_end_user.id
+        if @question.save
+         redirect_to questions_path
+        else
+         render :new
+        end
     end
     
     def index
-        @questions = Question.all
+        @questions = params[:tag_id].present? ? Tag.find(params[:tag_id]).questions : Question.page(params[:page])
     end
     
     def show
         @question = Question.find(params[:id])
+        @answer = Answer.new
     end
     
     def destroy
@@ -28,6 +33,6 @@ class Public::QuestionsController < ApplicationController
     private
     
     def question_params
-        params.require(:question).permit(:title, :body, :image)
+        params.require(:question).permit(:title, :body, :image, {:tag_ids => []})
     end
 end
